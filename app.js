@@ -38,6 +38,7 @@ var app = {
       app.imageCount += images.length;
       app.renderImages(oldCount);
     }, function(err) {
+      app.content.innerHTML = '<h3>Something went wrong - please try again!</h3>';
       console.error('error:', err);
     });
   },
@@ -55,6 +56,7 @@ var app = {
     
     x.onload = function() {
       var response = x.response;
+      console.log('response:', response);
       if (!response || !response.items || response.items.length === 0) {
         errorCallback('No response from Google Image search!');
         return;

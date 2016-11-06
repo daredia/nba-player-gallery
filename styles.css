@@ -23,6 +23,10 @@ only screen and (max-device-width: 599px) {
   cursor: pointer;
   display: inline-block;
   margin-bottom: 0px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;  
   width: 100%;
 }
 
