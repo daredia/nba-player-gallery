@@ -57,6 +57,8 @@ var app = {
     x.onload = function() {
       var response = x.response;
       console.log('response:', response);
+      console.log('response.items:', response.items);
+      console.log('response.items.length:', response.items.length);
       if (!response || !response.items || response.items.length === 0) {
         errorCallback('No response from Google Image search!');
         return;
