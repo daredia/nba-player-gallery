@@ -1,46 +1,10 @@
 .content {
-  -moz-column-count: 6;
+  -moz-column-count: 3;
   -moz-column-gap: 10px;
-  -webkit-column-count: 6;
+  -webkit-column-count: 3;
   -webkit-column-gap: 10px;
-  column-count: 6;
+  column-count: 3;
   column-gap: 10px;
-}
-
-@media only screen and (max-width: 1199px),
-only screen and (max-device-width: 1199px) {
-  .content {
-    -moz-column-count: 5;
-    -moz-column-gap: 10px;
-    -webkit-column-count: 5;
-    -webkit-column-gap: 10px;
-    column-count: 5;
-    column-gap: 10px;
-  }
-}
-
-@media only screen and (max-width: 999px),
-only screen and (max-device-width: 999px) {
-  .content {
-    -moz-column-count: 4;
-    -moz-column-gap: 10px;
-    -webkit-column-count: 4;
-    -webkit-column-gap: 10px;
-    column-count: 4;
-    column-gap: 10px;
-  }
-}
-
-@media only screen and (max-width: 799px),
-only screen and (max-device-width: 799px) {
-  .content {
-    -moz-column-count: 3;
-    -moz-column-gap: 10px;
-    -webkit-column-count: 3;
-    -webkit-column-gap: 10px;
-    column-count: 3;
-    column-gap: 10px;
-  }
 }
 
 @media only screen and (max-width: 599px),
@@ -70,18 +34,23 @@ ul {
 
 .lightbox {
   background: rgba(0, 0, 0, 0.9);
+  color: #fff;
   display: none;
   height: 100%;
   left: 0;
+  min-height: 600px;
   position: fixed;
   text-align: center;
   top: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;  
   width: 100%;
 }
 
 .lightbox p {
-  color: #fff;
-  font-size: 18px;
+  font-size: 16px;
   margin-right: 30px;
   text-align: right;
 }
@@ -90,8 +59,36 @@ ul {
   box-shadow: 0 0 25px #111;
   -webkit-box-shadow:0 0 25px #111;
   -moz-box-shadow:0 0 25px #111;
-  max-height: 80%;
   max-width: 60%;
 }
 
+.wrapper {
+  max-height: 80%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-60%);
+  width: 100%;
+}
+
+.fa {
+  cursor: pointer;
+  font-size: 100px !important;
+  padding: 20px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.fa:hover {
+  opacity: 0.3;
+}
+
+.fa-chevron-left {
+  left: 10%;
+}
+
+.fa-chevron-right {
+  right: 10%;
+}
 

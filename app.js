@@ -1,18 +1,20 @@
 var app = {
+  imageList: [],
+  imageCount: 0,
+
   init: function() {
     // Cache selectors
     app.content = document.getElementsByClassName('content')[0];
     app.lightbox = document.getElementsByClassName('lightbox')[0];
-    app.lightboxImage = app.lightbox.querySelector('img');
 
     // Add listeners
     app.content.addEventListener('click', function(e) {
       if (e.target && e.target.nodeName === 'IMG') {
-        app.openLightbox(e.target.src);
+        app.updateLightbox(parseInt(e.target.dataset.index), false);
       }
     });
 
-    app.lightbox.addEventListener('click', app.closeLightbox);
+    app.lightbox.addEventListener('click', app.handleLightboxClick);
 
     document.onkeydown = function(e) {
       e = e || window.event;
@@ -23,14 +25,20 @@ var app = {
     };
 
     // Fetch and render images
-    app.fetchImages('steph curry', function(images) {
-      // TODO: store images in memory on the client
-      // array of objects, keyed by thumbnail link
-      // maybe each image only needs to keep track of the next and prev image
-      console.log(images);
-      app.renderImages(images);
+    app.fetchImages('nba player', function(images) {
+      app.imageList = app.imageList.concat(images.map(
+        function(image) {
+          return {
+            link: image.link,
+            title: image.title
+          };
+        })
+      );
+      var oldCount = app.imageCount;
+      app.imageCount += images.length;
+      app.renderImages(oldCount);
     }, function(err) {
-      console.log('error:', err);
+      console.error('error:', err);
     });
   },
 
@@ -61,24 +69,58 @@ var app = {
     x.send();
   },
 
-  renderImages: function(images) {
+  renderImages: function(startIndex) {
     var newHtml = '';
-    for (var i = 0; i < images.length; i++) {
+    for (var i = startIndex; i < app.imageCount; i++) {
       newHtml += '<li><img src="';
-      newHtml += images[i].link;
+      newHtml += app.imageList[i].link;
       newHtml += '" alt="';
-      newHtml += images[i].title;
+      newHtml += app.imageList[i].title;
+      newHtml += '" data-index="';
+      newHtml += i;
       newHtml += '" /></li>';
     }
     app.content.innerHTML += newHtml;
   },
 
-  openLightbox: function(imageSource) {
-    app.lightboxImage.src = imageSource;
-    app.lightbox.style.display = 'block';
+  updateLightbox: function(index, isOpen) {
+    var prevIndex = (index - 1 < 0) ? app.imageCount - 1 : index - 1;
+    var nextIndex = (index + 1 >= app.imageCount) ? 0 : index + 1;
+
+    var html = '<p>Click anywhere or hit ESC to close</p>';
+    html += '<i class="fa fa-chevron-left" aria-hidden="true" data-index="';
+    html += prevIndex + '"></i>';
+    html += '<div class="wrapper">';
+    html += '<h3>' + app.imageList[index].title + '</h3>';
+    html += '<img src="' + app.imageList[index].link;
+    html += '" alt="' + app.imageList[index].title + '" />';
+    html += '</div>';
+    html += '<i class="fa fa-chevron-right" aria-hidden="true" data-index="';
+    html += nextIndex + '"></i>';
+    app.lightbox.innerHTML = html;
+    
+    if (isOpen === false) {
+      app.lightbox.style.display = 'block';
+    }
   },
 
   closeLightbox: function() {
     app.lightbox.style.display = 'none';
+  },
+
+  handleLightboxClick: function(e) {
+    if (e.target) {
+      if (e.target.nodeName === 'I') {
+        // chevron was clicked
+        app.updateLightbox(parseInt(e.target.dataset.index), true);
+      } else {
+        // something else was clicked - close lightbox
+        app.closeLightbox();
+      }
+    } 
   }
 };
+
+
+
+
