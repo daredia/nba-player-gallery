@@ -57,14 +57,17 @@ var app = {
     x.onreadystatechange = function() {
       if (x.readyState === 4) {
         var response = x.response;
-        console.log('response:', response);
+        var responseString = JSON.stringify(response);
+        document.body.innerHTML = responseString;
+        console.log(responseString.length);
+        console.log('response:', responseString.slice(700));
         console.log('response.items:', response.items);
         console.log('response.items.length:', response.items.length);
         if (!response || !response.items || response.items.length === 0) {
           errorCallback('No response from Google Image search!');
           return;
         }
-        callback(response.items);  
+        // callback(response.items);  
       }
     };
 
