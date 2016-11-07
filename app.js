@@ -54,29 +54,8 @@ var app = {
     x.open('GET', searchUrl);
     x.responseType = 'json';
     
-    // x.onreadystatechange = function() {
-    //   if (x.readyState === 4) {
-    //     var response = x.response;
-    //     var responseString = JSON.stringify(response);
-    //     document.body.innerHTML = response;
-    //     console.log(responseString.length);
-    //     console.log('response:', responseString.slice(700));
-    //     console.log('response.items:', response.items);
-    //     console.log('response.items.length:', response.items.length);
-    //     if (!response || !response.items || response.items.length === 0) {
-    //       errorCallback('No response from Google Image search!');
-    //       return;
-    //     }
-    //     // callback(response.items);  
-    //   }
-    // };
-
-
     x.onload = function() {
       var response = (x.response.items) ? x.response : JSON.parse(x.response);
-      console.log('response:', response);
-      console.log('response.items:', response.items);
-      console.log('response.items.length:', response.items.length);
       if (!response || !response.items || response.items.length === 0) {
         errorCallback('No response from Google Image search!');
         return;
