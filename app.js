@@ -55,6 +55,7 @@ var app = {
     x.responseType = 'json';
     
     x.onload = function() {
+      // parse response if not already parsed (e.g., Internet Explorer)
       var response = (x.response.items) ? x.response : JSON.parse(x.response);
       if (!response || !response.items || response.items.length === 0) {
         errorCallback('No response from Google Image search!');
